@@ -6,7 +6,6 @@
   sources ? import ./npins,
   pkgs ? import sources.nixpkgs { },
   securix ? import ../securix/. { inherit pkgs; },
-  mainDisk ? "/dev/vda",
 }:
 let
   inherit (pkgs) lib;

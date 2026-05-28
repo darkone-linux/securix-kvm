@@ -10,7 +10,12 @@ let
   attrs = import ./. { inherit pkgs; };
 in
 pkgs.mkShell {
-  nativeBuildInputs = [ attrs.vm ];
+  nativeBuildInputs = [
+    attrs.vm
+    pkgs.npins
+    pkgs.nixfmt-rfc-style
+    pkgs.statix
+  ];
   shellHook = ''
     echo "Securix VM environment loaded."
     echo "Run: run-securix-vm ./result/iso/*.iso"

@@ -5,7 +5,18 @@
 {
   sources ? import ./npins,
   pkgs ? import sources.nixpkgs { },
-  securix ? import ../securix/. { inherit pkgs; },
+  securix ?
+    let
+      override = builtins.getEnv "NPINS_OVERRIDE_SECURIX";
+      src =
+        if override == "" then
+          sources.securix
+        else if builtins.substring 0 1 override == "/" then
+          /. + override
+        else
+          /. + builtins.getEnv "PWD" + "/${override}";
+    in
+    import src { inherit pkgs; },
 }:
 let
   inherit (pkgs) lib;
